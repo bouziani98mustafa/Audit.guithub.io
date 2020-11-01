@@ -23,7 +23,7 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).render("login", {
-        message: "email and password is required",
+        message: "email and jgkgk password is required",
       });
     }
 
