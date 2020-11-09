@@ -2,51 +2,57 @@ const mysql = require("mysql");
 var http  =require('http'); 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const db = require("../models");
+const config = require("../config/auth.config");
 
 const express =require('express'); 
 var app =express(); 
 const bodyparser = require('body-parser'); 
 app.use(bodyparser.json());
 
-const db = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE,
-});
+// const db = mysql.createConnection({
+//   host: process.env.DATABASE_HOST,
+//   user: process.env.DATABASE_USER,
+//   password: process.env.DATABASE_PASSWORD,
+//   database: process.env.DATABASE,
+// });
 
 
 
 
-exports.login = async (req, res) => {
+exports.creer = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).render("login", {
-        message: "email and jgkgk password is required",
+    const {id, name, Rname } = req.body;
+    if (!name || !Rname) {
+      return res.status(400).render("creer", {
+        message: "Name and  NameRoom is required",
       });
     }
 
     db.query(
-      'SELECT * FROM users WHERE email= ?',
-      [email],
+      'SELECT * FROM users WHERE name= ?',
+      [name],
       async (error, results) => {
         console.log(results);
         
-        if (
-          !results ||
-          !(await bcrypt.compare(password, results[0].password))
-        ) {
+        // if (
+        //   !results ||
+        //   !(await bcrypt.compare(Rname, results[0].Rname))
+        // ) {
          
 
-          res.status(401).render('login', {
-            message: "email or password is incorrect",
-          })}
+        //   res.status(401).render('creer', {
+        //     message: " or password is incorrect",
+        //   })}
           
-            else {
+            //else {
               
-      
-          res.redirect('/LoginHome');           
+         const data=req.body.name; 
+          return res.status(409).render("home", {
+        data: data,
+      });
+          res.redirect('/LoginHome'+name+Rname);      
+          
           const id = results[0].id;
           const token = jwt.sign({ id }, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN,
@@ -58,8 +64,9 @@ exports.login = async (req, res) => {
 
           }
           res.cookie('jwt',token, cookieOptions); 
+          
           res.status(200).redirect("/"); 
-        }
+        
       }
     );
   } catch (error) {
@@ -67,84 +74,51 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.register = (req, res) => {
-  console.log(req.body);
+exports.join = (req, res) => {
+  //console.log(req.body);
+  
   //const name=req.body.name;
   //const email =req.body.email;
   //const password =req.body.password;
   //const passwordConfirm =req.body.passwordConfirm;
 
-  const { name, email, password, passwordConfirm } = req.body;
+  const { name, Rname, Role ,password } = req.body;
 
   db.query(
-    "SELECT email FROM users WHERE email= ?",
-    [email],
+    "SELECT * FROM users WHERE Role= ?",
+    [Role],
     async (error, results) => {
       if (error) console.log(error);
-      if (results.length > 0) {
-        return res.render("register", {
-          message: "that email is already in use",
-        });
-      } else if (password !== passwordConfirm) {
-        return res.render("register", {
-          message: "confirm password is not password",
-        });
-      }
-      let hashedPassword = await bcrypt.hash(password, 8);
-      console.log(hashedPassword);
-      db.query(
-        "INSERT INTO users SET ?",
-        { name: name, email: email, password: hashedPassword },
-        (error, results) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log(results);
-            return res.render("register", {
-              message: "user regustred",
-            });
-          }
-        }
-      );
+      if (!name || !Rname || !Role) {
+      return res.status(400).render("join", {
+        message: "Name and  NameRoom is required",
+      }); }
+      // else if (results.length > 0) {
+      //   return res.render("join", {
+      //     message: "that email is already in use",
+      //   });
+      // } 
+     
+      //req.users.Role ==='admin';
+
+      //let hashedPassword = await bcrypt.hash(password, 8);
+      console.log(results);
+      res.redirect('/LoginHome'); 
+       const data=req.body.Rname;
+      // db.query(
+      //   "INSERT INTO users SET ?",
+      //   { name: name, Rname: Rname, Role: Role,password: password },
+      //   (error, results) => {
+      //     if (error) {
+      //       console.log(error);
+      //     } else {
+      //       console.log(results);
+      //       return res.render("join", {
+      //         message: "user regustred",
+      //       });
+      //     }
+      //   }
+      // );
     }
   );
 };
-
-
-//image upload 
-// exports.home = function(req, res){
-//   message = '';
-//  if(req.method == "POST"){
-//     var post  = req.body;
-//     var id= post.id;
-// console.log('kfkfkfkf')
-//   if (!req.files)
-//       return res.status(400).send('No files were uploaded.');
-
-//   var file = req.files.uploaded_image;
-//   var img_name=file.name;
-
-//      if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
-                               
-//             file.mv('public/images/'+file.name, function(err) {
-                           
-//               if (!err)
-
-//                 //return res.status(500).send(err);
-                 
-//               var sql = "INSERT INTO `images`( `id` ,`images`) VALUES ('"+id + "','" + img_name + "')";
-
-//               var query = db.query(sql, function(err, result) {
-//                  res.redirect('oginHome/');
-//                  console.log('woooooooow image upload '); 
-//               });
-//            });
-//         } else {
-//           message = "This format is not allowed , please upload file with '.png','.gif','.jpg'";
-//           res.render('ome.ejs');
-//         }
-//  } else {
-//     //res.render('home');
-//  }
-
-// };
