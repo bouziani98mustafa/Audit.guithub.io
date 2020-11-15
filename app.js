@@ -14,11 +14,12 @@ const db= mysql.createConnection ({
 
 });
 
-const publicDirectory =path.join(__dirname,'./public' )  ;
+const publicDirectory =path.join(__dirname,'/.netlify/functions/views')  ;
 app.use(express.static(publicDirectory));
 app.use(express.urlencoded({extended :false}));
 app.use(express.json()); 
 app.use(cookieParser()); 
+app.set('views', './views');
 app.set('view engine', 'hbs'); 
 
 
