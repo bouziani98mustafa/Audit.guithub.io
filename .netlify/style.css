@@ -1,0 +1,150 @@
+.nav {
+  background-color: rgb(6, 6, 24);
+  color: papayawhip;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+}
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav li {
+  list-style: none;
+}
+nav li a {
+  color: papayawhip;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 8px;
+}
+
+nav li a :hover {
+  color: orange;
+  text-decoration: none;
+}
+
+
+
+
+.widget {
+  position: relative;
+  margin-bottom: 40px;
+  padding: 20px 20px;
+  background: #fff;
+  border-radius: .35rem;
+  box-shadow: 4px 4px 30px 0px rgba(75,102,171,0.2);
+}
+.table-emails .name, .table-emails .subject, .table-emails .date {
+  cursor: pointer;
+}
+.table-emails td, .table-emails th {
+  padding: 7px 5px 7px 5px;
+}
+.table th, .table td {
+  padding: 0.55rem;
+}
+.table th, .table td {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #d6dee5;
+}
+.d-none {
+  display: none !important;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+user agent stylesheet
+td {
+  display: table-cell;
+  vertical-align: inherit;
+}
+.table-emails .unread {
+  font-weight: 600;
+  color: #495057;
+}
+
+.sidebar {
+  position: fixed;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 224px;
+  border-right: 1px solid #031d2e;
+  background-color: #002B49;
+  color: #c2c2c2;
+}
+@media (prefers-reduced-motion: reduce)
+.chat-sidebar-container, .chat-sidebar-container .sidebar {
+    transition: none;
+}
+.chat-sidebar-container, .chat-sidebar-container .sidebar {
+    left: 0;
+    transition: left .3s ease-in-out;
+}
+.sidebar {
+    position: fixed;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 224px;
+    border-right: 1px solid #031d2e;
+    background-color: #002B49;
+    color: #c2c2c2;
+}
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+user agent stylesheet
+nav {
+    display: block;
+}
+body {
+    font-weight: 300;
+    overflow-x: hidden;
+}
+sidebar-status {
+  position: relative;
+  margin: 10px 0 20px;
+  padding: 0 15px 0 11px;
+}
+
+@media (min-width: 768px)
+.d-md-none {
+  display: none !important;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+.sidebar-nav {
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 300;
+}
+ol, ul, dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+user agent stylesheet
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+/* side bar */
+
+
