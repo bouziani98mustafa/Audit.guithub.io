@@ -32,6 +32,18 @@ exports.login = async (req, res) => {
       [email],
       async (error, results) => {
         console.log(results);
+        console.log( "*************************************************************************"
+          +"***********************************************************************************"+
+          "*************************************************************************"+
+          "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+
+          "***********************************************************************************"+
+          "***********************************welcome "+results[0].name +
+          "*************************************************************************"+
+          "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+
+          "***********************************************************************************"+
+           "*************************************************************************"+
+          "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+
+          "***********************************************************************************");
         
         if (
           !results ||
@@ -46,7 +58,9 @@ exports.login = async (req, res) => {
             else {
               
       
-          res.redirect('/LoginHome');           
+          res.redirect('/LoginHome'); 
+    //JWt
+             
           const id = results[0].id;
           const token = jwt.sign({ id }, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN,
@@ -58,7 +72,12 @@ exports.login = async (req, res) => {
 
           }
           res.cookie('jwt',token, cookieOptions); 
+
+          res.status(405).render("LoginHome", {
+            message: "results[0].name" ,
+          }); 
           res.status(200).redirect("/"); 
+
         }
       }
     );
@@ -109,42 +128,3 @@ exports.register = (req, res) => {
     }
   );
 };
-
-
-//image upload 
-// exports.home = function(req, res){
-//   message = '';
-//  if(req.method == "POST"){
-//     var post  = req.body;
-//     var id= post.id;
-// console.log('kfkfkfkf')
-//   if (!req.files)
-//       return res.status(400).send('No files were uploaded.');
-
-//   var file = req.files.uploaded_image;
-//   var img_name=file.name;
-
-//      if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
-                               
-//             file.mv('public/images/'+file.name, function(err) {
-                           
-//               if (!err)
-
-//                 //return res.status(500).send(err);
-                 
-//               var sql = "INSERT INTO `images`( `id` ,`images`) VALUES ('"+id + "','" + img_name + "')";
-
-//               var query = db.query(sql, function(err, result) {
-//                  res.redirect('oginHome/');
-//                  console.log('woooooooow image upload '); 
-//               });
-//            });
-//         } else {
-//           message = "This format is not allowed , please upload file with '.png','.gif','.jpg'";
-//           res.render('ome.ejs');
-//         }
-//  } else {
-//     //res.render('home');
-//  }
-
-// };
